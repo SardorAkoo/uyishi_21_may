@@ -10,7 +10,6 @@ class CpicokPage extends StatefulWidget {
 }
 
 class _CpicokPageState extends State<CpicokPage> {
-  @override
   final List<Map<String, dynamic>> items = [
     {
       "image":
@@ -40,13 +39,15 @@ class _CpicokPageState extends State<CpicokPage> {
       "time": 'Bugun 12:34'
     },
   ];
+
+  final TextEditingController _controller = TextEditingController();
   List<bool> isDone = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('3'),
+        title: const Text('3'),
         actions: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -57,36 +58,42 @@ class _CpicokPageState extends State<CpicokPage> {
                       'https://cdn-icons-png.flaticon.com/128/9354/9354787.png',
                       width: 25,
                     ),
-                    style: ButtonStyle(),
-                    offset: Offset(0, 50),
                     itemBuilder: (BuildContext context) => [
                           PopupMenuItem(
                             child: const Text('Galareya'),
                             onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (ctx) {
-                                    return MyHomePage();
-                                  },
-                                ),
+                              Future.delayed(
+                                Duration.zero,
+                                () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (ctx) {
+                                        return MyHomePage();
+                                      },
+                                    ),
+                                  );
+                                },
                               );
                             },
                           ),
                           PopupMenuItem(
                             child: const Text('Royxat'),
-                            onTap: () {
-                            
-                            },
+                            onTap: () {},
                           ),
                           PopupMenuItem(
                             child: const Text('Plitka'),
                             onTap: () {
-                                 Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (ctx) {
-                                    return plitka_dasr();
-                                  },
-                                ),
+                              Future.delayed(
+                                Duration.zero,
+                                () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (ctx) {
+                                        return plitka_dasr();
+                                      },
+                                    ),
+                                  );
+                                },
                               );
                             },
                           )
@@ -100,135 +107,160 @@ class _CpicokPageState extends State<CpicokPage> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width - 20,
-                height: 420,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+      body: Column(
+        children: [
+          Container(
+            width: MediaQuery.of(context).size.width - 20,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: TextField(
+              controller: _controller,
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Qidiruv',
+              ),
+              strutStyle: const StrutStyle(fontSize: 10),
+              cursorColor: Colors.amber,
+              cursorHeight: 25,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return Column(
                   children: [
-                    Stack(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width - 40,
-                          height: 250,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              image: NetworkImage(
-                                items[index]["image"]!,
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          child: Container(
-                            alignment: Alignment.center,
-                            width: 50,
-                            height: 30,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(5),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 20,
+                      height: 420,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width - 40,
+                                height: 250,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      items[index]["image"]!,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                color: Colors.greenAccent),
-                            child: Text('TOP'),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 50,
+                                  height: 30,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(5),
+                                    ),
+                                    color: Colors.greenAccent,
+                                  ),
+                                  child: const Text('TOP'),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(width: 16.0),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    items[index]["title"]!,
-                                    style: const TextStyle(
-                                      fontSize: 15.0,
-                                      fontWeight: FontWeight.w400,
+                          const SizedBox(width: 16.0),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          items[index]["title"]!,
+                                          style: const TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          isDone[index]
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: Colors.black,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            isDone[index] = !isDone[index];
+                                          });
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8.0),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: 60,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Text(
+                                      items[index]["description"]!,
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        color: Colors.grey.shade700,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                IconButton(
-                                  icon: Icon(
-                                    isDone[index]
-                                        ? Icons.favorite
-                                        : Icons.favorite_border,
-                                    color: Colors.black,
+                                  const SizedBox(
+                                    height: 8,
                                   ),
-                                  onPressed: () {
-                                    setState(
-                                      () {
-                                        isDone[index] = !isDone[index];
-                                      },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                            SizedBox(height: 8.0),
-                            Container(
-                              alignment: Alignment.center,
-                              width: 60,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[200],
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Text(
-                                items[index]["description"]!,
-                                style: TextStyle(
-                                  fontSize: 14.0,
-                                  color: Colors.grey.shade700,
-                                ),
+                                  Text(
+                                    "${items[index]['price']} so'm",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Text(
+                                    items[index]['city']!,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              "${items[index]['price']} so'm",
-                              style: const TextStyle(
-                                fontSize: 22,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Text(
-                              items[index]['city']!,
-                              style: const TextStyle(
-                                fontSize: 13,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
+                    const SizedBox(height: 15.0),
                   ],
-                ),
-              ),
-              const SizedBox(height: 15.0),
-            ],
-          );
-        },
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
